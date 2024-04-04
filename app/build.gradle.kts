@@ -47,15 +47,15 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.androidx.cardview)
 // https://square.github.io/okhttp/#releases
-    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation (libs.okhttp)
 // https://github.com/square/retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation (libs.retrofit)
 // https://github.com/google/gson
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation (libs.converter.gson)
+    implementation (libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
