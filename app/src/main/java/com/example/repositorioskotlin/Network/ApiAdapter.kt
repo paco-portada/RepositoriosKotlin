@@ -9,7 +9,10 @@ import java.util.concurrent.TimeUnit
 object ApiAdapter {
     private var API_SERVICE: ApiService? = null
     const val BASE_URL = "https://api.github.com/"
+    //const val BASE_URL = "https://api.githubmal.com/"
+
     // const val BASE_URL = "http://192.168.97.163/"
+
     // const val BASE_URL = "https://dam.org.es/"
     // Añadir al manifiesto
     // android:usesCleartextTraffic="true"

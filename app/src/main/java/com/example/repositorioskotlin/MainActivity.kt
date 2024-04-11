@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.repositorioskotlin.Adapter.ReposAdapter
 import com.example.repositorioskotlin.Model.Repo
@@ -103,21 +104,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
     private fun searchByNameResponse(query: String) {
         // lateinit var call: Call<ArrayList<Repo>>
 
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val response = instance!!.listReposResponse(query)
-            runOnUiThread {
-                hideKeyboard()
-                if (response.isSuccessful) {
-                    // Handle the retrieved post data
-                    val repos: ArrayList<Repo> =
-                        (response.body() ?: emptyArray<Repo>()) as ArrayList<Repo>
-                    listRepos.clear()
-                    listRepos.addAll(repos)
-                    adapter.notifyDataSetChanged()
-                } else {
-                    // Handle error
-                    showError(response.code().toString())
+        //CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
+            try {
+                val response = instance!!.listReposResponse(query)
+                //runOnUiThread {
+                launch(Dispatchers.Main) {
+                    hideKeyboard()
+                    if (response.isSuccessful) {
+                        // Handle the retrieved post data
+                        val repos: ArrayList<Repo> =
+                            (response.body() ?: emptyArray<Repo>()) as ArrayList<Repo>
+                        listRepos.clear()
+                        listRepos.addAll(repos)
+                        adapter.notifyDataSetChanged()
+                    } else {
+                        // Handle error
+                        showError(response.code().toString())
+                    }
+                }
+            } catch (e: Exception) {
+                launch(Dispatchers.Main) {
+                    hideKeyboard()
+                    showError("Error:\n" + e.message.toString())
+                    Log.e("Error", e.message.toString())
                 }
             }
         }
@@ -175,7 +185,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
     override fun onQueryTextSubmit(query: String): Boolean {
 
         if (!query.isNullOrEmpty())
-            // searchByName(query.lowercase())
+        // searchByName(query.lowercase())
             searchByNameResponse(query.lowercase())
 
         return true

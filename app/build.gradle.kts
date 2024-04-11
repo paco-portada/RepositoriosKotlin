@@ -56,6 +56,8 @@ dependencies {
 // https://github.com/google/gson
     implementation (libs.converter.gson)
     implementation (libs.kotlinx.coroutines.core)
+    //lifecycle
+    implementation (libs.androidx.lifecycle.runtime.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
